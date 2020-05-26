@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/indexstyle.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename = 'script.js') }}"></script>
+<body>
+    <div>
+      <nav id="nav">
+        <ul id="navigation">
+          <li><a href="#">Original Data &raquo;</a>
+              <ul>
+                  <li><a href="#" onclick="PCA_Original()">Scree Plot</a></li>
+                  <li><a href="#" onclick="PCA_TwoScatter()">Top Two PCA Scatterplot</a></li>
+                  <li><a href="#" onclick="Original_MDS_Eu()">MDS: Euclidean</a></li>
+                  <li><a href="#" onclick="Original_MDS_Co()">MDS: Correlation</a></li>
+                  <li><a href="#" onclick="ScatterMatrixOriginal()">Scatter Matrix</a></li>
+              </ul>
+          </li>
+            <li><a href="#">Random Sampled Data &raquo;</a>
+              <ul>
+                    <li><a href="#" onclick="PCA_Random()">Scree Plot</a></li>
+                    <li><a href="#" onclick="PCA_TwoScatterRandom()">Top Two PCA Scatterplot</a></li>
+                    <li><a href="#" onclick="Random_MDS_Eu()">MDS: Euclidean</a></li>
+                    <li><a href="#" onclick="Random_MDS_Co()">MDS: Correlation</a></li>
+                    <li><a href="#" onclick="ScatterMatrixRandom()">Scatter Matrix</a></li>
+              </ul>
+          </li>
+            <li><a href="#">Stratified Sampled Data &raquo;</a>
+              <ul>
+                    <li><a href="#" onclick="PCA_Stratified()">Scree Plot</a></li>
+                    <li><a href="#" onclick="PCA_TwoScatterStratified()">Top Two PCA Scatterplot</a></li>
+                    <li><a href="#" onclick="Stratified_MDS_Eu()">MDS: Euclidean</a></li>
+                    <li><a href="#" onclick="Stratified_MDS_Co()">MDS: Correlation</a></li>
+                    <li><a href="#" onclick="ScatterMatrixStratified()">Scatter Matrix</a></li>
+              </ul>
+          </li>
+          <li><a href="#">Misc. &raquo;</a>
+              <ul>
+                    <li><a href="kmeans">K-means plot</a></li>
+              </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+<div id="pcachartdiv"></div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://d3js.org/d3.v4.js"></script>
+<script>
+        var data = {{ data.pcadata | safe }}
+        var sum = 0
+        data.forEach(function(d) {
+            sum += d.variance;
+        });
+        data.forEach(function(d) {
+            d.variance = (d.variance/sum)*100;
+        });      
+        console.log(data);
+        drawScreePlot(data);
+</script>
+</body>
+</html>
